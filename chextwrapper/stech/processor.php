@@ -97,4 +97,3 @@ function addtozipfile($zipfolderpath){
 ?>
 
 <?php echo $msgback; ?>   
-<?php include('phpdatabases/close-connect-db.php'); ?>
