@@ -3,7 +3,7 @@
 <?php $msgback = "..."; ?>
 
 <?php
-$folderpath = '../../allsites/';//slash should be present at the end ..
+$folderpath = '../../allsites/';//slash should be present at the end ......
 if(isset($_POST['phpsetdata'])){
 	$tolowerpsrc = strtolower(mysqli_real_escape_string($conn, $_POST['phpsetdata']));
 
