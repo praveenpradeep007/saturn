@@ -3,10 +3,9 @@
 <?php $msgback = "..."; ?>
 
 <?php
-$folderpath = '../../allsites/';//slash should be present at the end ......
+$folderpath = '../../allsites/';
 if(isset($_POST['phpsetdata'])){
 	$tolowerpsrc = strtolower(mysqli_real_escape_string($conn, $_POST['phpsetdata']));
-
 	if(strpos($tolowerpsrc, "project")!==false){
 		$foldername = array_pop(explode(' ', $tolowerpsrc));
 		if(!file_exists($folderpath.$foldername.'')){
@@ -52,6 +51,30 @@ else if(isset($_POST['phpsetimagedatapix']) && isset($_POST['phpsetimagepath']))
 		file_put_contents($complete_save_loc, file_get_contents($url_to_image)); 
 	}
 }
+else if(isset($_POST['phppostsrcsup'])){
+	$phppostsrc= mysqli_real_escape_string($conn, $_POST['phppostsrcsup']);
+	$phppagearticle = mysqli_real_escape_string($conn, $_POST['phppagearticlesup']);
+	if( !(empty($phppostsrc) || empty($phppagearticle)) ){
+		$searchduplicatepost = "SELECT oneliners FROM whatsapponeliners WHERE status='done'";
+		$searchduplicatepostresult = $conn->query($searchduplicatepost);
+		if($searchduplicatepostresult->num_rows > 0){
+			$phpposttime = date('YmdH');
+			$setpostinfo = "UPDATE whatsapponeliners SET oneliners='$phppostsrc',status='notyet',posttime='$phpposttime',pagearticle='$phppagearticle'";
+			$conn->query($setpostinfo);
+		}
+	}
+}
+else if(isset($_POST['phpsetonelinedata'])){
+	$msgback = "";
+	$getimginfo = "SELECT oneliners FROM whatsapponeliners WHERE status='notyet' LIMIT 1";
+	$getimginforesult = $conn->query($getimginfo);
+	if($getimginforesult->num_rows > 0){
+		$getimginforow = $getimginforesult->fetch_assoc();
+		$msgback = $getimginforow['oneliners'];
+		$updatepostinfo = "UPDATE whatsapponeliners SET status='done'";
+		$conn->query($updatepostinfo);   
+	}
+}
 ?>
 
 <?php
@@ -68,7 +91,6 @@ function copysourcecode($fromfilepath,$tofilepath,$foldername){
 		fwrite($tohandle, $data);
 }
 function addtozipfile($zipfolderpath){
-	//Amir Md Amiruzzaman(https://stackoverflow.com/questions/4914750/how-to-zip-a-whole-folder-using-php)
 	class FlxZipArchive extends ZipArchive{
  		public function addDir($location, $name){
 			$this->addEmptyDir($name);
