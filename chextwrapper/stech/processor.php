@@ -3,7 +3,7 @@
 <?php $msgback = "..."; ?>
 
 <?php
-$folderpath = '../../allsites/';
+$folderpath = '../allsites/';
 if(isset($_POST['phpsetdata'])){
 	$tolowerpsrc = strtolower(mysqli_real_escape_string($conn, $_POST['phpsetdata']));
 	if(strpos($tolowerpsrc, "project")!==false){

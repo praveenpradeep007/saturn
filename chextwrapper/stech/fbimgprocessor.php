@@ -7,7 +7,7 @@
         $conn->query($setpostinfo);
         $content = file_get_contents("http://localhost/chextwrapper/stech/imagecreator.php");
         $concstr = rand(100,9000);
-        $fp = fopen("../../allketuploads/chimage".$concstr.".jpg", "w");
+        $fp = fopen("../allketuploads/chimage".$concstr.".jpg", "w");
         fwrite($fp, $content);
         fclose($fp);
         $setpostinfo = "UPDATE fbketfacts SET status='done'";
